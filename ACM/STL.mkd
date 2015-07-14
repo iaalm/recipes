@@ -1,0 +1,227 @@
+STL
+=======
+*by iaalm(iaalmsimon@gmail.com)*
+
+#Algorithm
+    template< class RandomIt >
+    void sort( RandomIt first, RandomIt last );
+    template< class RandomIt, class Compare >
+    void sort( RandomIt first, RandomIt last, Compare comp );
+    bool cmp(const Type1 &a, const Type2 &b);
+    template< class InputIt, class UnaryFunction >
+    UnaryFunction for_each( InputIt first, InputIt last, UnaryFunction f );
+>       #include <vector>
+>       #include <algorithm>
+>       #include <iostream>
+>        
+>       struct Sum {
+>           Sum() { sum = 0; }
+>           void operator()(int n) { sum += n; }
+>        
+>           int sum;
+>       };
+>        
+>       int main()
+>       {
+>           std::vector<int> nums{3, 4, 2, 9, 15, 267};
+>        
+>           std::cout << "before: ";
+>           for (auto n : nums) {
+>               std::cout << n << " ";
+>           }
+>           std::cout << '\n';
+>        
+>           std::for_each(nums.begin(), nums.end(), [](int &n){ n++; });
+>           Sum s = std::for_each(nums.begin(), nums.end(), Sum());
+>        
+>           std::cout << "after:  ";
+>           for (auto n : nums) {
+>               std::cout << n << " ";
+>           }
+>           std::cout << '\n';
+>           std::cout << "sum: " << s.sum << '\n';
+>       }
+##Function objects
+    equal_to
+    not_equal_to
+    greater
+    less
+    greater_equal
+    less_equal
+#Data Struct
+
+##pair
+    template<
+        class T1,
+        class T2
+    > struct pair;
+    
+    template< class T1, class T2 >
+    std::pair<T1,T2> make_pair( T1 t, T2 u );
+    first
+    second
+
+##string
+    basic_string& append( size_type count, const CharT& ch );
+    basic_string& append( const basic_string& str );
+    basic_string& append( const basic_string& str,
+                          size_type pos,
+                          size_type count );
+    basic_string& append( const CharT* s,
+                          size_type count );
+    basic_string& append( const CharT* s );
+    template< class InputIt >
+    basic_string& append( InputIt first, InputIt last );
+    basic_string& replace( size_type pos, size_type count,
+                           const basic_string& str );
+    
+    basic_string& replace( const_iterator first, const_iterator last,
+                           const basic_string& str );
+    basic_string& replace( size_type pos, size_type count,
+                           const basic_string& str,
+                           size_type pos2, size_type count2 );
+    basic_string substr( size_type pos = 0,
+                         size_type count = npos );
+    size_type find_first_of/find_first_not_of/find_last_of/find_last_not_of( const basic_string& str, size_type pos = 0 ) const;
+    size_type find_first_of/find_first_not_of/find_last_of/find_last_not_of( const CharT* s, size_type pos, size_type count ) const;
+    size_type find_first_of/find_first_not_of/find_last_of/find_last_not_of( const CharT* s, size_type pos = 0 ) const;
+    size_type find_first_of/find_first_not_of/find_last_of/find_last_not_of( CharT ch, size_type pos = 0 ) const;
+    Defined in header <string>
+    template< class CharT, class Traits, class Allocator >
+    std::basic_istream<CharT,Traits>& getline( std::basic_istream<CharT,Traits>& input,
+                                               std::basic_string<CharT,Traits,Allocator>& str,
+                                               CharT delim );
+
+##stream
+    basic_istream& unget();
+    basic_istream& putback( char_type ch );
+    void open( const char *filename,
+           ios_base::openmode mode = ios_base::in|ios_base::out );
+    void close();
+    bool eof() const;
+##Container
+
+general
+------------
+    bool empty()
+    size_type count( const Key& key ) const;
+    void clear();
+    iterator erase( iterator pos );
+    iterator erase( iterator first, iterator last );
+    iterator begin();
+    iterator end();
+    iterator rbegin();
+    iterator rend();
+
+
+vector
+-------
+    template<
+        class T,
+        class Allocator = std::allocator<T>
+    > class vector;
+    
+    iterator insert( iterator pos, const T& value );
+    void push_back( const T& value );
+    void pop_back();
+
+list
+-------
+    template<
+        class T,
+        class Allocator = std::allocator<T>
+    > class list;
+    
+    iterator insert( iterator pos, const T& value );
+    void insert( iterator pos, size_type count, const T& value );
+    template< class InputIt >
+    void insert( iterator pos, InputIt first, InputIt last);
+    void unique();
+    template< class BinaryPredicate >
+    void unique( BinaryPredicate p );
+    void push_back( const T& value );
+    void push_front( const T& value );
+    void pop_back();
+    void pop_front();
+    void remove( const T& value );
+    template< class UnaryPredicate >
+    void remove_if( UnaryPredicate p );
+    void sort();	
+    template< class Compare > 
+    void sort( Compare comp );
+    
+set
+-------
+    template<
+        class Key,
+        class Compare = std::less<Key>,
+        class Allocator = std::allocator<Key>
+    > class set;
+    
+    std::pair<iterator,bool> insert( const value_type& value );
+    iterator insert( iterator hint, const value_type& value );
+    iterator insert( const_iterator hint, value_type&& value );
+    iterator find( const Key& key );
+    iterator lower_bound( const Key& key ); //<=
+    iterator upper_bound( const Key& key ); //>
+    std::pair<iterator,bool> insert( const value_type& value );
+
+map
+--------
+    template<
+        class Key,
+        class T,
+        class Compare = std::less<Key>,
+        class Allocator = std::allocator<std::pair<const Key, T> >
+    > class map;
+    
+    std::pair<iterator,bool> insert( const value_type& value );
+    T& operator[]( const Key& key );
+    
+
+queue
+--------
+    template<
+        class T,
+        class Container = std::deque<T>
+    > class queue;
+    
+    reference front();
+    reference back();
+    void push( const T& value );
+    void pop();
+    
+deque
+--------------
+    template<
+        class T,
+        class Allocator = std::allocator<T>
+    > class deque;
+    
+    void push_back( const T& value );
+        void push_front( const T& value );
+        void pop_back();
+        void pop_front();
+
+priority_queue
+--------------
+    template<
+        class T,
+        class Container = std::vector<T>,
+        class Compare = std::less<typename Container::value_type>
+    > class priority_queue;
+    
+    reference top();
+    void push( const T& value );
+    void pop();
+
+stack
+--------
+    template<
+        class T,
+        class Container = std::deque<T>
+    > class stack;
+    
+    reference top();
+    void push( const T& value );
+    void pop();

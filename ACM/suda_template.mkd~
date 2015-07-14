@@ -1,0 +1,515 @@
+苏州大学ACM模版
+===================
+by
+
+*calvn(calvinlee.ljw@gmail.com)*
+*iaalm(iaalmxu@gmail.com)*
+
+并查集
+--------------------
+查
+
+    int f(int n){
+        return v[n]==n?n:v[n]=f(v[n]);
+    }
+并
+
+    v[f(i)]=f(j);
+
+匈牙利算法
+-------------------
+    class Bipartite
+    {
+    public:
+    	int nx,ny,*x,*y;
+    	list<int> *edge;
+    	Bipartite(int m,int n)
+    	{
+    		nx = m;
+    		ny = n;
+    		x = new int[nx];
+    		memset(x,0xff,nx * sizeof(int));
+    		y = new int[ny];
+    		memset(y,0xff,ny * sizeof(int));
+    		edge = new list<int>[nx];
+    	}
+    	//Bipartite(int m):Bipartite(m,m);
+    	~Bipartite()
+    	{
+    		delete[] x;
+    		delete[] y;
+    		delete[] edge;
+    	}
+    	void addedge(int i,int j)
+    	{
+    		edge[i].insert(edge[i].begin(),j);
+    	}
+    	int result()
+    	{
+    		int *visit = new int[nx],*qu = new int[nx],i,j,k,l,now,result = 0;
+    		list<int>::iterator it,en;
+    		for(i = 0;i < nx;i++)
+    		{
+    			memset(visit,0xff,nx * sizeof(int));
+    			now = 1;
+    			qu[0] = i;
+    			visit[i] = i;
+    			for(j = 0;j < now;j++)
+    			{
+    				for(it = edge[qu[j]].begin(),en = edge[qu[j]].end();it != en;it++)
+    				{
+    					if(y[*it] == -1)
+    					{
+    						k = *it;
+    						for(l = qu[j];l != i;l = visit[l])
+    						{
+    							y[k] = l;
+    							swap(k,x[l]);
+    						}
+    						y[k] = i;
+    						swap(k,x[i]);
+    						result++;
+    						goto end;
+    					}
+    					k = y[*it];
+    					if(visit[k] == -1)
+    					{
+    						visit[k] = qu[j];
+    						qu[now++] = k;
+    					}
+    				}
+    			}
+    end:			;
+    		}
+    		delete[] visit;
+    		delete[] qu;
+    		return result;
+    	}
+    };
+最大流
+-------
+
+    const int Ni = 210;
+    const int MAX = 1<<26;
+    struct Edge{
+    	int u,v,c,f;
+    	int next;
+    }edge[Ni*Ni];
+    int n,m;
+    int smax[50],us[50];
+    int edn;//边数
+    int p[Ni];//父亲
+    int d[Ni];
+    int sp,tp;//原点，汇点
+    
+    void addedge(int u,int v,int c)
+    {
+    	edge[edn].u=u; edge[edn].v=v; edge[edn].c=c; edge[edn].f=c;
+    	edge[edn].next=p[u]; p[u]=edn++;
+    
+    	edge[edn].u=v; edge[edn].v=u; edge[edn].c=0; edge[edn].f=0;
+    	edge[edn].next=p[v]; p[v]=edn++;
+    }
+    int bfs()
+    {
+    	queue <int> q;
+    	memset(d,-1,sizeof(d));
+    	d[sp]=0;
+    	q.push(sp);
+    	while(!q.empty())
+    	{
+    		int cur=q.front();
+    		q.pop();
+    		for(int i=p[cur];i!=-1;i=edge[i].next)
+    		{
+    			int u=edge[i].v;
+    			if(d[u]==-1 && edge[i].c>0 && us[u] < smax[u])
+    			{
+    				d[u]=d[cur]+1;
+    				q.push(u);
+    			}
+    		}
+    	}
+    	return d[tp] != -1;
+    }
+    int dfs(int a,int b)
+    {
+    	int r=0;
+    	if(a==tp)return b;
+    	for(int i=p[a];i!=-1 && r<b;i=edge[i].next)
+    	{
+    		int u=edge[i].v;
+    		if(edge[i].c>0 && d[u]==d[a]+1)
+    		{
+    			int x=min(smax[u] - us[u],min(edge[i].c,b-r));
+    			//int x=min(edge[i].c,b-r);
+    			x=dfs(u,x);
+    			r+=x;
+    			edge[i].c-=x;
+    			edge[i^1].c+=x;
+    			us[u] += x;
+    		}
+    	}
+    	if(!r)d[a]=-2;
+    	return r;
+    }
+    
+    int dinic(int sp,int tp)
+    {
+    	int total=0,t;
+    	while(bfs())
+    	{
+    		while((t=dfs(sp,MAX)))
+    			total+=t;
+    	}
+    	return total;
+    }
+欧几里得
+----------
+    int ojld(int i,int j){
+    	int t;
+    	while(j != 0){
+    		t = i % j;
+    		i = j;
+    		j = t;
+    	}
+    	return i;
+    }
+Prime
+------
+    #define INF (1 << 26)
+    #define TRANS(R,L,N) ((R)*(N)+(L))
+    int Prim(int *table,int num)
+    {
+    	int i,min,index,s,result = 0;
+    	int *low = (int*)malloc(num * sizeof(int));
+    	for(s = 1;s < num;s++)
+    		low[s] = table[TRANS(0,s,num)];
+    	low[0] = 0;
+    	for(s =1;s < num;s++)
+    	{
+    		min = INF;
+    		for(i = 0;i < num;i++)
+    			if(low[i] != 0 && low[i] < min)
+    			{
+    				min = low[i];
+    				index = i;
+    			}
+    		result += min;
+    		low[index] = 0;
+    		for(i = 0;i < num;i++)
+    			if(table[TRANS(i,index,num)] < low[i])
+    				low[i] = table[TRANS(i,index,num)];
+    	}
+    	free(low);
+    	return result;
+    }
+KMP
+--------------
+####KMP求Next数组：(含-1版本）
+
+    void get_nextval(const char *T, int next[])
+    {
+           // 求模式串T的next函数值并存入数组 next。
+           int j = 0, k = -1;
+           next[0] = -1;
+           while ( T[j/*+1*/] != '\0' )
+           {
+                  if (k == -1 || T[j] == T[k])
+                  {
+                         ++j; ++k;
+                         if (T[j]!=T[k])
+                                next[j] = k;
+                         else
+                                next[j] = next[k];
+                  }
+                  else
+                         k = next[k];
+           }
+    }
+####算法导论不含-1版本：
+
+#####（一般next数组解题常用版本)
+
+    #include<stdio.h>
+    #define MAX 10010
+    char rec[MAX];//Index starts from 1;
+    int next[MAX],len;
+    void get_next(){
+    	int m=len;
+    	next[1]=0;
+    	int k=0;
+    	for(int q=2;q<=m;q++){
+    		while(k>0&&rec[k+1]!=rec[q])
+    			k=next[k];
+    		if(rec[k+1]==rec[q])
+    			k++;
+    		next[q]=k;
+    	}
+    }
+    int main(){
+    	scanf("%d",&len);
+    	for(int i=1;i<=len;i++){
+    		scanf("%c",rec+i);
+    	}
+    	get_next();
+    	puts("");
+    	for(int i=1;i<=len;i++){
+    		printf("%c %d\n",rec[i],next[i]);
+    		
+    	}
+    	return 0;
+    }
+####KMP模式匹配总函数：
+
+    #include <iostream.h>
+    #include <string.h>
+    int KMP(const char *Text,const char* Pattern) 
+    {
+           if( !Text||!Pattern||  Pattern[0]=='\0'  ||  Text[0]=='\0' )//
+                  return -1;//空指针或空串，返回-1。
+           int len=0;
+           const char * c=Pattern;
+           while(*c++!='\0')//移动指针比移动下标快。
+           {    
+                  ++len;//字符串长度。
+           }
+           int *next=new int[len+1];
+           get_nextval(Pattern,next);//求Pattern的next函数值
+       
+           int index=0,i=0,j=0;
+           while(Text[i]!='\0'  && Pattern[j]!='\0' )
+           {
+                  if(Text[i]== Pattern[j])
+                  {
+                         ++i;// 继续比较后继字符
+                         ++j;
+                  }
+                  else
+                  {
+                         index += j-next[j];
+                         if(next[j]!=-1)
+                                j=next[j];// 模式串向右移动
+                         else
+                         {
+                                j=0;
+                                ++i;
+                         }
+                  }
+           }//while
+       
+           delete []next;
+           if(Pattern[j]=='\0')
+                  return index;// 匹配成功
+           else
+                  return -1;      
+    }
+    int main()//abCabCad
+    {
+           char* text="bababCabCadcaabcaababcbaaaabaaacababcaabc";
+        char*pattern="adCadCad";
+           //getNext(pattern,n);
+        //get_nextval(pattern,n);
+          cout<<KMP(text,pattern)<<endl;
+           return 0;
+    }
+
+组合数
+---------------------------
+	unsigned int C(int b,int s){
+		if(ct[b][s] != 0xffffffff)
+			return ct[b][s];
+		int res;
+		if(b < s)
+			res = 0;
+		else if(b == s || s == 0)
+			res = 1;
+		else
+			res = (C(b-1,s-1) + C(b-1,s))%MOD;
+		ct[b][s] = res;
+		return res;
+	
+	}
+
+
+后缀数组模版：
+---------------------------
+
+    #include<stdio.h>
+    #include<string.h>
+    //#include<math.h>
+    #define MAX 300
+    int wx[MAX],wy[MAX],bar[MAX],nrank[MAX];
+    int sa[MAX],height[MAX];
+    //int query[MAX][30];
+    int cmp(int *in,int a,int b,int l)
+    {
+    	return in[a] == in[b]&&in[a+l] == in[b+l];
+    }
+    int min(int x,int y)
+    {
+    	return x > y ? y : x;
+    }
+    /*void get_query(int *ai,int len)
+    {
+    	int i,k;
+    	for (i = 0; i< len; i++)
+    		query[i][0] = ai[i];
+    	for (k = 1;(int)pow(2.0,k) - 1 < len; k++)
+    		for (i = 0; i < len; i++)
+    			if (i + (int)pow(2.0,k) - 1 < len)
+    				query[i][k] = min(query[i][k-1],query[i+(int)pow(2.0,k-1)][k-1]);
+    			else break;
+    }*/
+    void get_sa(char *s,int *sa)
+    {
+    	int len = strlen(s)-1,*rank = wx,*sa_y = wy,*t,i,m = 255;
+    	for (i = 0; i<= m; i++) bar[i] = 0;
+    	for (i = 0; i< len; i++) bar[rank[i] = s[i]]++;
+    	for (i = 0; i< m; i++) bar[i+1] += bar[i];
+    	for (i = len-1; i>= 0; i--)	sa[--bar[rank[i]]] = i;
+    	//sa数组保存的是某个名词的后缀的起始位置，对k=1时的排序用的是桶排序，先一个一个进桶，然后再倒出来
+    	for (int p = 1,k = 1; p < len; k *= 2,m = p)
+    	{
+    		for (p = 0,i = len-k; i < len; i++) sa_y[p++] = i;
+    		for (i = 0; i< len; i++) if (sa[i] >= k) sa_y[p++] = sa[i] - k;
+    		//要求2k-前缀的sa，需用k-前缀倍增得到，用y数组保存2k-前缀时第二关键字的排序结果，即k-前缀时某位置+k的sa排名
+    		//容易得到k-前缀时某位置+k有一些已经超出了s的范围，还有一些位置不能作为第二关键字起始位置，可以看出，他们的数目是相等的
+    		for (i = 0; i< len; i++) nrank[i] = rank[sa_y[i]];
+    		for (i = 0; i<= m; i++) bar[i] = 0;
+    		for (i = 0; i< len; i++) bar[nrank[i]] ++;
+    		for (i = 0; i< m; i++) bar[i+1] += bar[i];
+    		for (i = len-1; i>= 0; i--) sa[--bar[nrank[i]]] = sa_y[i];
+    		//对关于第二关键字排好序的序列再按第一关键字排序，用的还是桶排序，nrank[i]纪录的是按第二关键字排好序以后的序列的第一关键字名次序列
+    		for (t = sa_y,sa_y = rank,rank = t,p = 1,rank[sa[0]] = 0,i = 1; i < len; i++)
+    			rank[sa[i]] = cmp(sa_y,sa[i-1],sa[i],k)?p-1:p++;
+    		//这段代码求新的rank数组，原来的rank用sa_y来保存，比较排名相邻的两个后缀的第一和第二关键字是否完全一样，确定不同后缀的数目，用p纪录
+    	}
+    }
+    void get_height(char *s,int *sa,int *height)
+    {
+    	int len = strlen(s),*rank = wx,i,j,k = 0;
+    	for (i = 0; i < len; i++) rank[sa[i]] = i;
+    	for (i = 0; i < len-1; height[rank[i++]] = k)
+    		for (k?k--:0,j = sa[rank[i] - 1]; s[i+k] == s[j+k]; k++) ;
+    	//计算height用到了辅助数组h，这段代码中没有保留h，只是按照h从0到len-2的顺序计算的，这段代码非常精简，for循环用的出神入化
+    	//h数组的定义为h[i] = height[rank[i]],所以代码中用后者直接代替了前者，h数组有一个规律 h[i] >= h[i-1] - 1，证明论文里有
+    	//根据规律，就可以按照顺序计算h数组，计算方法分三种情况，老罗的论文里有
+    	return;
+    }
+    int main()
+    {
+    	
+    	char str[MAX]; int len,i;
+    	memset(str,0,sizeof(str));
+    	scanf ("%s",&str);
+    	len = strlen(str);
+    	str[len] = '$';
+    	get_sa(str,sa);
+    	 
+        //打印sa数组
+    	printf ("****sa****\n");
+    	for (i = 0; i< len; i++)
+    		printf ("%d %d\n",i,sa[i]);
+    	printf ("**********\n");
+    
+    
+    	get_height(str,sa,height);
+    	//get_query(height,len);
+    	return 0;
+    }
+    
+    #include<stdio.h>
+    #include<math.h>
+    #define MAX 300
+    #define MAXD 30
+    int query[MAX][MAXD];
+    int min(int x,int y)
+    {
+    	return x > y ? y : x;
+    }
+    int main()
+    {
+    	int ai[100] = {12,58,2,63,658,1,256,945,20,36,0,1,25,0,6,9};
+    	int x,y,i,k,len = 16;
+    	for (i = 0; i< len; i++)
+    		query[i][0] = ai[i];
+    	for (k = 1;(int)pow(2.0,k) - 1 < len; k++)
+    		for (i = 0; i < len; i++)
+    			if (i + (int)pow(2.0,k) - 1 < len)
+    				query[i][k] = min(query[i][k-1],query[i+(int)pow(2.0,k-1)][k-1]);
+    			else break;
+    	while (scanf ("%d%d",&x,&y) && x+y)
+    	{
+    		k = (int)(log(y-x+1)/log(2));
+    		int ans = min(query[x][k],query[y-(int)pow(2.0,k)+1][k]);
+    		printf ("%d\n",ans);
+    	}
+    
+    	return 0;
+    }
+RMQ问题的解决方法有好多种，常用的是线段树和ST算法，线段树O(nlogn)时间建树，O(logn)时间查询，ST算法O(nlogn)时间预处理，常数时间查询。
+但是ST算法只处理静态的数组，即数组中的元素不会变动，维护的花费比线段树大，线段树查询和维护的时间都是O(logn)，各有优劣，视题目而定。
+设a[i]是要求区间最值的数列，f[i,j]表示从第i个数起连续2^j个数中的最大值。f[i,0]其实就等于a[i]。
+把f[i，j]平均分成两段（因为f[i，j]一定是偶数个数字），从i到i+2^(j-1)-1为一段，i+2^(j-1)到i+2^j-1为一段(长度都为2^（j-1）)，
+f[i，j]就是这两段的最大值中的最大值。于是我们得到了动规方程F[i,j]=max（F[i，j-1],F[i+2^(j-1)，j-1]）。
+查询的话直接给出表达式：
+    k:=(int)(ln(r-l+1)/ln(2));
+    ans:=max(F[l，k],F[r-2^k+1,k]);
+
+Vim配置文件
+------------------
+    set modeline
+    set autochdir
+    set number
+    set cursorline 
+    "set foldmethod=indent
+    
+    syntax enable
+    syntax on
+    
+    set autoindent
+    set cindent
+    let Tlist_Show_One_File=1
+    let Tlist_Exit_OnlyWindow=1
+    
+    map <F5> :w<CR>make<CR>
+    nmap s :nohlsearch<CR>
+    
+    inoremap ( ()<ESC>i
+    inoremap [ []<ESC>i
+    inoremap { {}<ESC>i
+    inoremap {<CR> {<CR>}<ESC>O
+    inoremap ) <c-r>=ClosePair(')')<CR>
+    inoremap ] <c-r>=ClosePair(']')<CR>
+    "inoremap } <c-r>=CloseBracket()<CR>
+    inoremap " <c-r>=QuoteDelim('"')<CR>
+    inoremap ' <c-r>=QuoteDelim("'")<CR>
+    function ClosePair(char)
+     if getline('.')[col('.') - 1] == a:char
+     return "\<Right>"
+     else
+     return a:char
+     endif
+    endf
+    function CloseBracket()
+     if match(getline(line('.') + 1), '\s*}') < 0
+     return "\<CR>}"
+     else
+     return "\<Esc>j0f}a"
+     endif
+    endf
+    function QuoteDelim(char)
+     let line = getline('.')
+     let col = col('.')
+     if line[col - 2] == "\\"
+     "Inserting a quoted quotation mark into the string
+     return a:char
+     elseif line[col - 1] == a:char
+     "Escaping out of the string
+     return "\<Right>"
+     else
+     "Starting a string
+     return a:char.a:char."\<Esc>i"
+     endif
+    endf

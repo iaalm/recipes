@@ -1,0 +1,31 @@
+tm.cpp: 在构造函数‘TuringMachine::TuringMachine(unsigned int, unsigned int, const std::vector<unsigned int [5]>&)’中:
+tm.cpp:86:31: 错误： ‘NFlag’不能出现在常量表达式中
+tm.cpp:87:20: 警告： 在有符号和无符号整数表达式间比较 [-Wsign-compare]
+tm.cpp:88:21: 警告： 在有符号和无符号整数表达式间比较 [-Wsign-compare]
+tm.cpp:89:15: 错误： expected unqualified-id before ‘[’ token
+tm.cpp:90:63: 错误： 请求从‘__gnu_cxx::__normal_iterator<const unsigned int (*)[5], std::vector<unsigned int [5]> >’转换到非标量类型‘std::vector<unsigned int [5]>::iterator {aka __gnu_cxx::__normal_iterator<unsigned int (*)[5], std::vector<unsigned int [5]> >}’
+tm.cpp:95:11: 错误： ‘exit’在此作用域中尚未声明
+tm.cpp: 在成员函数‘void TuringMachine::Work(PageTape&)’中:
+tm.cpp:115:10: 错误： ‘exit’在此作用域中尚未声明
+beta.cpp: 在构造函数‘std::vector<_Tp, _Alloc>::vector(std::vector<_Tp, _Alloc>::size_type, const value_type&, const allocator_type&) [with _Tp = unsigned int [5], _Alloc = std::allocator<unsigned int [5]>, std::vector<_Tp, _Alloc>::size_type = long unsigned int, std::vector<_Tp, _Alloc>::value_type = unsigned int [5], std::vector<_Tp, _Alloc>::allocator_type = std::allocator<unsigned int [5]>]’中:
+beta.cpp:22:36: 错误： 请求从‘int’转换到非标量类型‘std::vector<unsigned int [5]>::value_type {aka unsigned int [5]}’
+beta.cpp: 在函数‘int main()’中:
+beta.cpp:23:21: 警告： 扩展初始值设定列表只在 -std=c++0x 或 -std=gnu++0x 下可用 [默认启用]
+beta.cpp:23:21: 错误： assigning to an array from an initializer list
+beta.cpp:26:5: 错误： ‘class TuringMachine’没有名为‘work’的成员
+In file included from /usr/include/c++/4.6/bits/char_traits.h:41:0,
+                 from /usr/include/c++/4.6/ios:41,
+                 from /usr/include/c++/4.6/ostream:40,
+                 from /usr/include/c++/4.6/iostream:40,
+                 from tm.h:10,
+                 from beta.cpp:1:
+/usr/include/c++/4.6/bits/stl_algobase.h: 在函数‘typename __gnu_cxx::__enable_if<(! std::__is_scalar<_Tp>::__value), _OutputIterator>::__type std::__fill_n_a(_OutputIterator, _Size, const _Tp&) [with _OutputIterator = unsigned int (*)[5], _Size = long unsigned int, _Tp = unsigned int [5], typename __gnu_cxx::__enable_if<(! std::__is_scalar<_Tp>::__value), _OutputIterator>::__type = unsigned int (*)[5]]’中:
+/usr/include/c++/4.6/bits/stl_algobase.h:780:75：自‘_OI std::fill_n(_OI, _Size, const _Tp&) [with _OI = unsigned int (*)[5], _Size = long unsigned int, _Tp = unsigned int [5]]’实例化
+/usr/include/c++/4.6/bits/stl_uninitialized.h:206:11：自‘static void std::__uninitialized_fill_n<true>::__uninit_fill_n(_ForwardIterator, _Size, const _Tp&) [with _ForwardIterator = unsigned int (*)[5], _Size = long unsigned int, _Tp = unsigned int [5]]’实例化
+/usr/include/c++/4.6/bits/stl_uninitialized.h:225:7：自‘void std::uninitialized_fill_n(_ForwardIterator, _Size, const _Tp&) [with _ForwardIterator = unsigned int (*)[5], _Size = long unsigned int, _Tp = unsigned int [5]]’实例化
+/usr/include/c++/4.6/bits/stl_uninitialized.h:320:7：自‘void std::__uninitialized_fill_n_a(_ForwardIterator, _Size, const _Tp&, std::allocator<_Tp2>&) [with _ForwardIterator = unsigned int (*)[5], _Size = long unsigned int, _Tp = unsigned int [5], _Tp2 = unsigned int [5]]’实例化
+/usr/include/c++/4.6/bits/stl_vector.h:1124:2：自‘void std::vector<_Tp, _Alloc>::_M_fill_initialize(std::vector<_Tp, _Alloc>::size_type, const value_type&) [with _Tp = unsigned int [5], _Alloc = std::allocator<unsigned int [5]>, std::vector<_Tp, _Alloc>::size_type = long unsigned int, std::vector<_Tp, _Alloc>::value_type = unsigned int [5]]’实例化
+/usr/include/c++/4.6/bits/stl_vector.h:266:9：自‘std::vector<_Tp, _Alloc>::vector(std::vector<_Tp, _Alloc>::size_type, const value_type&, const allocator_type&) [with _Tp = unsigned int [5], _Alloc = std::allocator<unsigned int [5]>, std::vector<_Tp, _Alloc>::size_type = long unsigned int, std::vector<_Tp, _Alloc>::value_type = unsigned int [5], std::vector<_Tp, _Alloc>::allocator_type = std::allocator<unsigned int [5]>]’实例化
+beta.cpp:22:36：从此处实例化
+/usr/include/c++/4.6/bits/stl_algobase.h:733:2: 错误： 无效的数组赋值
+make: *** [test] 错误 1

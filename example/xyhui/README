@@ -1,0 +1,8 @@
+用于抓取校邮汇（xyhui.com）中苏州大学智慧之星题库
+
+genCookie.sh	登陆生成cookies
+getPage.sh	抓取页面
+cookies		cookies
+Test.java	处理并加入数据库，唐冬鑫的完整的解决方案，不依赖前两个程序
+output.php	读取数据库输出成html
+output.html	最终题库	

@@ -1,0 +1,366 @@
+html,body,div,p,h1,h2,h3,h4,ul,li,ol { 
+  margin: 0; 
+  padding: 0; 
+  color: #323232; 
+  font-family: 'Segoe UI Light','Segoe UI','Microsoft Jhenghei','微软雅黑',sans-serif;
+  text-align: center;
+}
+body {
+  padding-top: 55px;
+  overflow: hidden;
+  color: #666;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: " ";
+}
+
+.clearfix:after {
+  clear: both;
+}
+::-webkit-scrollbar {
+  width: .45em;
+  height: .35em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00b4d2;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(256,256,256,1);
+}
+a {
+  /*display: inline-block;*/
+  text-decoration: none;
+  color: #323232;
+  -webkit-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+   -moz-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+    -ms-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+     -o-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+        transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); /* linear */
+}
+
+.menu {
+  width: 75%;
+  height: 55px;
+  margin: 0 auto;
+  background: url(../image/logo.png) no-repeat 0 center;
+  background-size: 250px 40px;
+}
+.menu li {
+  display: inline-block;
+  height: 55px;
+  line-height: 55px;
+  float: right;
+  margin-left: 20px;
+}
+.menu li a {
+  font-weight: bold;
+  font-size: 16px;
+  padding: 3px 10px;
+  color: #00b4d2;
+}
+.menu li a:hover {
+  font-weight: bold;
+  font-size: 16px;
+  background: #00b4d2;
+  color: #fff; 
+}
+
+.footer {
+  height: 170px;
+  border-top: 5px solid #00a2c8;
+  background: #323437;
+}
+.footer .footer-content {
+  height: 135px;
+  text-align: left;
+  width: 75%;
+  margin: 0 auto;
+  padding: 0;
+}
+.footer .footer-content .footer-nav {
+  display: inline-block;
+}
+
+.footer .footer-content .footer-nav li {
+  display: inline-block;
+  line-height: 135px;
+  float: left;
+}
+.footer .footer-content .footer-nav li a {
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  color: #858585;
+}
+.footer .footer-content .footer-nav li a:hover {
+  color: #fff;
+}
+.footer .footer-copy {
+  background: #101010;
+  height: 35px;
+  line-height: 35px;
+  color: #fafafa;
+  font-size: 13px;
+}
+
+.gray-border-top {
+    border-top: 1px solid #9b9b9b;
+    color: #00b4d2; 
+}
+
+.topFixedNav {
+  position: fixed;
+  z-index: 6666;
+  height: 55px;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  -webkit-box-shadow: rgba(0,0,0,.1) 0 1px 5px;
+  -moz-box-shadow: rgba(0,0,0,.1) 0 1px 5px;
+  box-shadow: rgba(0,0,0,.1) 0 1px 5px;
+}
+
+.product-area {
+  width: 100%;
+  _height: 580px;
+  position: relative;
+  min-height: 620px;
+  height: 620px\9;
+  height: 620px\0;
+}
+
+h2 {
+  text-align: center;
+  font-family: "Myriad Pro",'Segoe UI Light','Segoe UI','Microsoft Jhenghei','微软雅黑',sans-serif;
+  height: 100px;
+  color: #9b9b9b;
+  line-height: 150px;
+  font-size: 2.25em;
+  font-weight: normal;
+}
+h3 {
+  text-align: center;
+  font-size: 1.575em;
+  display: inline-block;
+  font-family: "Myriad Pro",'Segoe UI Light','Segoe UI','Microsoft Jhenghei','微软雅黑',sans-serif;
+  height: 50px;
+  line-height: 50px;
+  border-top: 1px solid #fff; 
+  font-weight: normal;
+}
+#showMenu {
+  position: fixed;
+  width: 120px;
+  height: 55px;
+  line-height: 55px;
+  right: 0;
+  top: 0;
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  z-index: 9999;
+}
+#showMenu:hover {
+  background: #00b4d2;
+  color: #fff;
+}
+
+@media all and (min-width: 800px) and (max-width: 1080px) {
+  .menu,.footer .footer-content {
+    width: 100%;
+  }
+  .menu li {
+    margin-left: 5px;
+  }
+}
+@media all and (min-width: 680px) and (max-width: 800px) {
+  .menu,.content,.footer .footer-content {
+    width: 100%;
+  }
+  .menu li {
+    margin-left: 0px;
+  }
+}
+@media all and (min-width: 240px) and (max-width: 680px) {
+  .menu,.content,.footer .footer-content {
+    width: 98%;
+  }
+  .nav {
+    background: #fff url(../inimag/cecos-logo.png) no-repeat 5px center;
+  }
+  .menu {
+    margin-top: 55px;
+    width: 120px;
+    float: right;
+    background: none;
+    display: none;
+  }
+  .menu li {
+    display: block;
+    height: 30px;
+    line-height: 28px;
+    background: #fff;
+  }
+  .menu li a {
+    display: inline-block;
+    width: 100px;
+  }
+  #showMenu {
+    display: block;
+    cursor: pointer;
+  }
+}
+.absolute {
+  position: absolute;
+  left: 50%;
+  overflow: hidden;
+  margin-left: -341px;
+  z-index: 5;
+}
+
+.text-color-white {
+  color: #fff;
+}
+
+.openfans {
+  height: 325px;
+  background: #d5d5d5;
+}
+.first-h3-title {
+  border: none;
+  font-size: 1.3em;
+}
+/*###########################################################################*/
+#sider-nav {
+  font-size: 12px;
+  position: fixed;
+  right: 20px;
+  top: 25%;
+  /*border: 1px solid #f00;*/
+  text-align: left;
+  list-style: none;
+}
+#sider-nav a {
+  display: block;
+  height: 55px;
+  color: #fff;
+  line-height: 55px;
+  padding-left: 50px;
+  text-align: left!important;
+ /*   -webkit-transition: all 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+   -moz-transition: all 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+    -ms-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+     -o-transition: all 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750); 
+        transition: all 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750); /* linear */*/
+ /* -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+   -o-transition: none;
+      transition: none;*/
+}
+.active {
+  color: #0DECDA!important;
+  background-position: 0 -54px!important;
+}
+.icon-top {
+  background: url(../image/icon-top.png) no-repeat 0 0px;
+  font-size: 16px;
+}
+.icon-ecology {
+  background: url(../image/icon-ecology.png) no-repeat 0 0px;
+}
+.icon-culture {
+  background: url(../image/icon-culture.png) no-repeat 0 0px;
+}
+.icon-organic {
+  background: url(../image/icon-organic.png) no-repeat 0 0px;
+}
+.icon-healthy {
+  background: url(../image/icon-healthy.png) no-repeat 0 0px;
+}
+
+#top {
+  background: #d5d5d5 url(../image/top.png) no-repeat center 73.5%;
+}
+#ecology {
+  background: #d5d5d5 url(../image/ecology.png) no-repeat center 73.5%;
+}
+#culture {
+  background: #d5d5d5 url(../image/culture.png) no-repeat center 73.5%;
+}
+#organic {
+  background: #d5d5d5 url(../image/organic.png) no-repeat center 73.5%;
+}
+#healthy {
+  background: #d5d5d5 url(../image/healthy.png) no-repeat center 73.5%;
+}
+.nav-active {
+  color: #00b4d2!important;
+}
+.nav-active:hover {
+  color: #fff!important;
+}
+@media all and (min-width: 1680px) and (max-width: 1920px) {
+ h2 {
+  text-align: center;
+  font-family: "Myriad Pro",'Segoe UI Light','Segoe UI','Microsoft Jhenghei','微软雅黑',sans-serif;
+  height: 200px;
+  color: #9b9b9b;
+  line-height: 360px;
+  font-size: 1.25em;
+  font-weight: normal;
+  } 
+  #top {
+    background: #f0f0f0 url(../image/top.png) no-repeat center 73.5%;
+  }
+  #ecology {
+    background: #f0f0f0 url(../image/ecology.png) no-repeat center 73.5%;
+  }
+  #culture {
+    background: #f0f0f0 url(../image/culture.png) no-repeat center 73.5%;
+  }
+  #organic {
+    background: #f0f0f0 url(../image/organic.png) no-repeat center 73.5%;
+  }
+  #healthy {
+    background: #f0f0f0 url(../image/healthy.png) no-repeat center 73.5%;
+  }
+  #intelligence {
+    background: #f0f0f0 url(../image/intelligence.png) no-repeat center 73.5%;
+  }
+  #science {
+    background: #f0f0f0 url(../image/science.png) no-repeat center 73.5%;
+  }
+}
+.btn-ghost{
+  margin-top: 18%;
+  padding-top:1%;
+  padding-bottom:1%;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+.btn-ghost > a{
+  font-weight: bold;
+  text-shadow: none;
+  background-color: rgba(0,0,0,0);
+  border-color: #fff;
+  border-width: 2px;
+  color:#fff;
+}
+li .dropdown-menu {
+	margin: 0;
+}
+li:hover .dropdown-menu {
+	display: block;
+}
+#sider-nav a{
+  margin:15px;
+}
+#sider-nav a:hover {
+  font-size: 16px;
+}

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=LifeGame
+Comment=Conway's life game
+Exec=/home/simon/YUNIO/code/example/LifeGame/conway-gtk
+Icon=/usr/share/icons/gnome/48x48/devices/input-dialpad.png
+Terminal=0
+Type=Application
+Categories=Game;
+

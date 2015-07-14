@@ -1,0 +1,20 @@
+9
+Kongs
+.son1
+..son1son2
+..son1son1
+...sonkson2son1
+...son1son2son2
+..son1son3
+...son1son3son1
+.son0
+7
+L
+b son1son3son1
+b son1son2
+b sonkson2son1
+b son1
+c sonkson2son1 son1son2son2
+c son1son3son1 son1son2
+0
+

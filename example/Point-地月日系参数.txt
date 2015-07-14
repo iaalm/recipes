@@ -1,0 +1,7 @@
+sm=2e30kg
+er=1.5ykm
+ev=30km/s
+em=6e24kg
+mm=7e23kg
+mr=38wm
+mv=1km/s

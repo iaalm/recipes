@@ -1,0 +1,1 @@
+curl http://10.20.8.203/default2.aspx -b cookies -d __VIEWSTATE=dDwtMTg3MTM5OTI5MTs7PhMbjAbINgvvHsvy/Qdjcw3RMlRn -d TextBox1=1127403079 -d TextBox2=lighting -d TextBox3=$1 -d RadioButtonList1=RadioButtonList1_2 -d Button1= -d lbLanguage= > a.html

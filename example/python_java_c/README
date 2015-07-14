@@ -1,0 +1,4 @@
+测试了C Java Python的效率差别
+仅定点运算时间上来看
+C比Java快一个数量级
+Java比Python再快一个数量级

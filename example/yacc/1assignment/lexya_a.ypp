@@ -1,0 +1,31 @@
+%{
+#include <stdio.h>
+#include <map>
+#include <string>
+using namespace std;
+int yylex(void);
+void yyerror(char *);
+map<char,int> tab;
+%}
+%token INTEGER ENTRY
+%left '+' '-'
+%left '*' '/'
+%%
+program:
+program expr '\n' { printf("OUTPUT>%d\n", $2); }
+|
+;
+expr:
+INTEGER { $$ = $1; }
+| ENTRY { $$ = tab[$1];}
+| ENTRY '=' INTEGER {$$ = tab[$1] = $3;}
+| ENTRY '=' ENTRY {$$ = tab[$1] = tab[$3];}
+;
+%%
+void yyerror(char *s) {
+printf("%s\n", s);
+}
+int main(void) {
+yyparse();
+return 0;
+}

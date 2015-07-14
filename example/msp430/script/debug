@@ -1,0 +1,3 @@
+PATH=/home/simon/workspace/msp430/mspgcc/bin:$PATH
+sudo mspdebug rf2500 gdb exit &
+msp430-gdb -x ./script/gdbcmd

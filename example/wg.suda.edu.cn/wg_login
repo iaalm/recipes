@@ -1,0 +1,4 @@
+s=`curl wg.suda.edu.cn | grep -oP '(?<=<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value=")[^"]*(?=")'`
+e=`curl wg.suda.edu.cn | grep -oP '(?<=<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value=")[^"]*(?=")'`
+curl wg.suda.edu.cn/index.aspx -d __VIEWSTATE=$s -d TextBox1=$1 -d TextBox2=$2 -d nw=RadioButton1 -d tm=RadioButton6 -d Button1=登录网关 -d __EVENTVALIDATION=$e
+

@@ -1,0 +1,5 @@
+编译命令
+gcc -lglut -lGLU -lGL light.c
+
+light.x rotate.c triangle.c 为例程
+triangle.c -> point.c -> sin.c

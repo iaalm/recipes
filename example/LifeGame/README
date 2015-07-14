@@ -1,0 +1,3 @@
+conway-gtk和without_space之间只相差一像素的间距(4x4像素和3x3像素加一像素间距)
+但人眼看起来相差很大
+LifeGame复制到/usr/share/applications/ 下并适当修改路径
