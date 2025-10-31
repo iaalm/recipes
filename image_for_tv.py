@@ -1,3 +1,6 @@
+"""
+The main purpose of this script is to resize the images to 1920x1080 and apply a blur background to the images.
+"""
 import os
 import sys
 from PIL import Image, ImageFilter

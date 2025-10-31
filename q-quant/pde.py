@@ -1,3 +1,7 @@
+"""
+This script used to calculate the price of a barrier option using the Black-Scholes model.
+Solved with Finite Difference Method (FDM) on Partial Differential Equation (PDE).
+"""
 from QuantLib import *
 import matplotlib.pyplot as plt
 
