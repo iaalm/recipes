@@ -5,20 +5,29 @@ Solved with Finite Difference Method (FDM) on Partial Differential Equation (PDE
 import QuantLib as ql
 import matplotlib.pyplot as plt
 import yfinance as yf
+import numpy as np
 
 # 获取英伟达（NVIDIA）的股票价格（2024/11/11 到 2025/11/11）
 start_date = "2024-11-11"
 end_date = "2025-11-11"
 nvda_data = yf.download("NVDA", start=start_date, end=end_date, auto_adjust=True)
 
+# 计算基于收盘价的历史波动率
+close_prices = nvda_data[('Close', "NVDA")].values
+# 计算对数收益率
+log_returns = np.diff(np.log(close_prices))
+# 计算年化波动率（假设252个交易日）
+volatility = np.std(log_returns) * np.sqrt(252)
+
 spot_price = nvda_data.iloc[0][('Close', "NVDA")]
 strike_price = spot_price
 barrier = strike_price * 1.45
+print(f"Strike Price: {strike_price}, Barrier: {barrier}")
+print(f"Calculated Annualized Volatility: {volatility*100:.2f}%")
 
 # 定义市场参数
 spot_price = 100.0
 strike_price = 100.0
-volatility = 0.4
 risk_free_rate = 0.05
 barrier_payoff = 0.07
 exercise_date = ql.Date(11, 12, 2025)
