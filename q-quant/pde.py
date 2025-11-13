@@ -26,8 +26,6 @@ print(f"Strike Price: {strike_price}, Barrier: {barrier}")
 print(f"Calculated Annualized Volatility: {volatility*100:.2f}%")
 
 # 定义市场参数
-spot_price = 100.0
-strike_price = 100.0
 risk_free_rate = 0.05
 barrier_payoff = 0.07
 exercise_date = ql.Date(11, 12, 2025)
@@ -53,24 +51,40 @@ option.setPricingEngine(engine)
 prices = []
 npvs = []
 deltas = []
+last_price = strike_price
+last_delta = 0
+simulated_npv = 1.0
+simulated_npvs = []
 for idx, data in nvda_data.iterrows():
     ql.Settings.instance().evaluationDate = ql.Date(data.name.day, data.name.month, data.name.year)
     price = data[('Close', "NVDA")]
     spot.setValue(price)
     prices.append(price)
     npv = option.NPV()
-    npvs.append(npv)
+    npvs.append(npv / strike_price * 100)
     delta = option.delta()
     deltas.append(delta)
 
-plt.subplot(3, 1, 1)
-plt.title("Price underlying asset")
+    pnl = (price / last_price - 1) * last_delta 
+    simulated_npv *= (1 + pnl)
+    simulated_npvs.append(simulated_npv)
+    last_price = price
+    last_delta = delta
+
+plt.subplot(4, 1, 1)
+plt.grid()
+plt.title(f"Price underlying asset (Strike Price: {strike_price:.1f}, Barrier: {barrier:.1f})")
 plt.plot(prices, label="Price")
-plt.subplot(3, 1, 2)
-plt.title("Price of Barrier Option")
+plt.subplot(4, 1, 2)
+plt.grid()
+plt.title(f"Price of Barrier Option (% related to strike price) under Annualized Volatility: {volatility*100:.1f}%")
 plt.plot(npvs, label="NPV")
-plt.subplot(3, 1, 3)
+plt.subplot(4, 1, 3)
+plt.grid()
 plt.title("Delta Curve of Barrier Option")
 plt.plot(deltas, label="Delta")
-plt.legend()
+plt.subplot(4, 1, 4)
+plt.grid()
+plt.title("Simulated NPV")
+plt.plot(simulated_npvs, label="Simulated NPV")
 plt.show()
