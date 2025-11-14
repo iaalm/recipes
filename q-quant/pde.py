@@ -69,11 +69,11 @@ for idx, data in nvda_data.iterrows():
     ql.Settings.instance().evaluationDate = ql.Date(data.name.day, data.name.month, data.name.year)
     price = data[('Close', instrument)]
     spot.setValue(price)
-    prices.append(price)
+    prices.append(price / strike_price)
     if price > barrier:
         break
     npv = option.NPV()
-    npvs.append(npv / strike_price * 100)
+    npvs.append(npv / strike_price)
     delta = option.delta()
     deltas.append(delta)
 
@@ -86,13 +86,13 @@ for idx, data in nvda_data.iterrows():
 plt.figure(figsize=(8, 16))
 plt.subplot(4, 1, 1)
 plt.grid()
-plt.title(f"Price underlying asset ({instrument} Strike: {strike_price:.1f}, Barrier: {barrier:.1f})")
-plt.axhline(y=barrier, color='r', linestyle='--', label='Barrier')
-plt.axhline(y=strike_price, color='grey', linestyle='--', label='Strike')
+plt.title(f"Price underlying asset ({instrument} (related to strike price)")
+plt.axhline(y=barrier_ratio, color='r', linestyle='--', label='Barrier')
+plt.axhline(y=1.0, color='grey', linestyle='--', label='Strike')
 plt.plot(prices, label="Price")
 plt.subplot(4, 1, 2)
 plt.grid()
-plt.title(f"Price of Barrier Option (% related to strike price) under Annualized Volatility: {volatility*100:.1f}%")
+plt.title(f"Price of Barrier Option (related to strike price) under Annualized Volatility: {volatility*100:.1f}%")
 plt.plot(npvs, label="NPV")
 plt.subplot(4, 1, 3)
 plt.grid()
@@ -103,5 +103,3 @@ plt.grid()
 plt.title("Simulated NPV")
 plt.plot(simulated_npvs, label="Simulated NPV")
 plt.show()
-
-# %%
