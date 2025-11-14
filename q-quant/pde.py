@@ -7,6 +7,7 @@ import QuantLib as ql
 import matplotlib.pyplot as plt
 import yfinance as yf
 import numpy as np
+from os import environ
 
 
 # 定义市场参数
@@ -17,8 +18,11 @@ barrier_payoff = 0.07
 barrier_ratio = 1.45
 instrument = "NVDA"
 
+if "PROXY_URL" in environ:
+    yf.set_config(proxy=environ["PROXY_URL"])
+
 # 下载数据
-nvda_data = yf.download(instrument, start=start_date, end=end_date, auto_adjust=True, proxy="http://127.0.0.1:1087")
+nvda_data = yf.download(instrument, start=start_date, end=end_date, auto_adjust=True)
 
 # 计算基于收盘价的历史波动率
 close_prices = nvda_data[('Close', instrument)].values
