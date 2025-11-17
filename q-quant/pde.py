@@ -37,7 +37,7 @@ print(end_date)
 print(f"Strike Price: {strike_price}, Barrier: {barrier}")
 print(f"Calculated Annualized Volatility: {volatility*100:.2f}%")
 
-exercise_date = ql.Date(end_date.day, end_date.month, end_date.year)
+exercise_date = ql.Date(end_date.day, end_date.month, end_date.year) + ql.Period(1, ql.Days)
 
 #%%
 # 定义 QuantLib 对象
@@ -86,7 +86,7 @@ for idx, data in nvda_data.iterrows():
 plt.figure(figsize=(8, 16))
 plt.subplot(4, 1, 1)
 plt.grid()
-plt.title(f"Price underlying asset ({instrument} (related to strike price)")
+plt.title(f"Price underlying asset {instrument} (related to strike price)")
 plt.axhline(y=barrier_ratio, color='r', linestyle='--', label='Barrier')
 plt.axhline(y=1.0, color='grey', linestyle='--', label='Strike')
 plt.plot(prices, label="Price")
