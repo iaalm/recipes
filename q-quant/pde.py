@@ -23,6 +23,8 @@ if "PROXY_URL" in environ:
 
 # 下载数据
 nvda_data = yf.download(instrument, start=start_date, end=end_date, auto_adjust=True)
+if len(nvda_data) == 0:
+    raise RuntimeError("Can't download data from yf")
 
 # 计算基于收盘价的历史波动率
 close_prices = nvda_data[('Close', instrument)].values
@@ -92,7 +94,7 @@ plt.axhline(y=1.0, color='grey', linestyle='--', label='Strike')
 plt.plot(prices, label="Price")
 plt.subplot(4, 1, 2)
 plt.grid()
-plt.title(f"Price of Barrier Option (related to strike price) under Annualized Volatility: {volatility*100:.1f}%")
+plt.title(f"Price of Barrier Option (related to strike price) under Annualized Volatility: {volatility:.2f}%")
 plt.plot(npvs, label="NPV")
 plt.subplot(4, 1, 3)
 plt.grid()
